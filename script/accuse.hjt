@@ -36,7 +36,7 @@ engine:StoryTllrC64
 <end node> 5P9i0s8y19Z
 dt=Text
 <node>
-licence:GPL 2 or later
+licence:GPL v.3
 2
 <end node> 5P9i0s8y19Z
 dt=Text
@@ -120,18 +120,28 @@ msg:Nothing happens.
 <end node> 5P9i0s8y19Z
 dt=Text
 <node>
-surrender|give_up
+give_up
 2
-msg:The murder was committed by +
+<end node> 5P9i0s8y19Z
+dt=Text
+<node>
+abandon
+2
+<end node> 5P9i0s8y19Z
+dt=Text
+<node>
+surrender
+2
+msg:I'm sorry about that. Anyway, here's the solution:
+msg:Murderer: +
 msgobj:$murderer 
-msg:using +
+msg:Murder weapon: +
 msgobj:$murderweapon
-msg:in the +
+msg:Murder location: +
 msgroom:$murderlocation
 
-msg:Investigation time: +
+msg:Minutes spent investigating: +
 msgvar:$time
-msg: minutes
 
 waitkey
 msg:Do you want to try again? (Y/N)
@@ -184,10 +194,9 @@ ifobjin:$this,$here
 				ifvar:$tmp,=,3
 					clear
 					msg:#Congratulation!
-					msg:the suspect cannot sustain your gaze and after a moment's hesitation confirms your accusation
-					msg:You solved the case in +
+					msg:The suspect cannot sustain your gaze and, after a moment of hesitation, confirms your accusation.
+					msg:Minutes spent investigating: +
 					msgvar:$time
-					msg: minutes!
 					msg:Do you want to play again (Y/N)?
 					getkey
 					ifkey:Y
@@ -264,30 +273,61 @@ msg:#north, #south, #east, #west, #up, and #down: Go that direction.
 msg:#take (object): Get that object.
 msg:#accuse (someone) with (something): Accuse 'someone' of committing the murder at this location, using 'something'.
 msg:#invite (someone) to (room): Tell the named person to go that place.
-msg:#Give #up: Give up, and be told what the solution was.
+msg:#surrender: Give up, and be told what the solution was.
 
 <end node> 5P9i0s8y19Z
 dt=Text
 <node>
-cheat
+imacheater
 2
-msg:The murder was committed by +
+msg:Murderer: +
 msgobj:$murderer 
-msg:using +
+msg:Murder weapon: +
 msgobj:$murderweapon
-msg:in the +
+msg:Murder location: +
 msgroom:$murderlocation
-
 
 <end node> 5P9i0s8y19Z
 dt=Text
 <node>
 elapsed
 2
-msg:Investigation time: +
+msg:Minutes spent investigating: +
 msgvar:$time
-msg: minutes
 
+<end node> 5P9i0s8y19Z
+dt=Text
+<node>
+talk
+2
+<end node> 5P9i0s8y19Z
+dt=Text
+<node>
+withobj:$none
+3
+msg:You really like the sound of your voice, don't you?
+
+<end node> 5P9i0s8y19Z
+dt=Text
+<node>
+withobj:$every
+3
+ifobjin:$this,$here
+	ifobj:$this,actor+visible
+		msg: You are not here to talk but to find a culprit using your intuition
+	else
+		msg: You don't see this person here
+	endif
+else
+	msg: You don't see this person here
+endif
+
+<end node> 5P9i0s8y19Z
+dt=Text
+<node>
+read
+2
+msg: There's no time for that. There's a murder to be solved here.
 
 <end node> 5P9i0s8y19Z
 dt=Text
@@ -413,7 +453,7 @@ else
 <end node> 5P9i0s8y19Z
 dt=Text
 <node>
-poison
+poison|jar
 2
 <end node> 5P9i0s8y19Z
 dt=Text
@@ -435,7 +475,12 @@ verb
 <end node> 5P9i0s8y19Z
 dt=Text
 <node>
-use|drink
+drink
+4
+<end node> 5P9i0s8y19Z
+dt=Text
+<node>
+use
 4
 ifobjin:$this,$available
 	msg:You don't really want to do that. It seems dangerous
@@ -455,7 +500,7 @@ note
 <end node> 5P9i0s8y19Z
 dt=Text
 <node>
-name:a note
+name:a #note
 3
 <end node> 5P9i0s8y19Z
 dt=Text
@@ -477,7 +522,7 @@ ifobjin:$this,$available
 	msg:\gSir, we've done all sorts of tests, and you have an extraordinary gift.  By merely accusing someone of using something for murder, you can determine if there is something true about the accusation with complete accuracy.
 	msg:\gThere are some complications, though.
 	msg:\gFor example, the weapon and your current location are considered part of the accuration... so if you accuse an innocent person in the murder location or of using the murder weapon, you'll only determine that something about your accusation is true.
-	msg:\gFor each accusation you have to use a completely different set of people, weapon, and location than your previous accusation; this can complicate your efforts.
+	msg:\gFor each accusation you have to use a completely different set of people, and weapon than your previous accusation; this can complicate your efforts.
 	msg:\gAlso, it takes 10 minutes for you to determine if an accusation is true... that may be a problem when you are in a hurry.  Science is completely unable to explain your gift; use it wisely.
 else
 	msg:You don't see that here
@@ -619,7 +664,7 @@ onfirst
 msg:As soon as you enter the library, your boss says:
 msg:\gI'm so glad you've come.  Please hurry to determine who performed this murder, along with where and with what.
 msg:\gI know you have a special power when you accuse others; I've brought this note to explain it further.
-msg:Your boss gives you a note
+msg:Your boss gives you a #note
 putobj:note,$inventory
 
 <end node> 5P9i0s8y19Z
@@ -786,7 +831,7 @@ x
 6
 msg:The plaque says, 'This game is Copyright (C) 2007 David A. Wheeler.'
 msg:It is released under the terms of the GNU General Public License (GPL), version 2 or later.
-msg:Please check the read.me file for further information about this porting
+msg:This C64 porting has been made by Marco Giorgini using its own IF engine, called storytllr64
 
 <end node> 5P9i0s8y19Z
 dt=Text
